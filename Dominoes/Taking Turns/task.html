@@ -1,0 +1,245 @@
+<h5 id="description">Description</h5>
+
+<p>It's time to bring the game to life. In this stage, you need to add a game loop that will allow players to take turns until the end-game condition is met.</p>
+
+<p>In dominoes, you can make a move by taking one of the following actions:</p>
+
+<ul>
+	<li>Select a domino and place it on the right side of the snake.</li>
+	<li>Select a domino and place it on the left side of the snake.</li>
+	<li>Take an extra piece from the stock (if it's not empty) and skip a turn.</li>
+</ul>
+
+<p>To make a move, the player has to specify the action they want to take. In this project, the actions are represented by integer numbers in the following manner: <code class="java">{side_of_the_snake (+/-), domino_number (integer)}</code> or <code class="java">{0}</code>. For example:<br>
+<code class="java">-6</code> : Take the sixth domino and place it on the left side of the snake. <br>
+<code class="java"> 6</code> : Take the sixth domino and place it on the right side of the snake.<br>
+<code class="java"> 0</code> : Take an extra piece from the stock (if it's not empty) and skip a turn or simply skip a turn if the stock is already empty by this point.</p>
+
+<p>When it's time for the player to make a move, your program must prompt the user for a number. If this number exceeds the limitations (larger than the number of dominoes), your program must generate an error message and prompt for input again. Once the valid input is received, your program must apply the move.</p>
+
+<p>For now, don't bother about the AI, our goal is just to make the game playable. So, when it's time for the computer to make a move, make it choose a random number between <code class="java">-computer_size</code> and <code class="java">computer_size</code> (where the <code class="java">computer_size</code> is the number of dominoes the computer has).</p>
+
+<p>The end-game condition can be achieved in two ways:</p>
+
+<ol>
+	<li>One of the players runs out of pieces. The first player to do so is considered a winner.</li>
+	<li>
+	<p>The numbers on the ends of the snake are identical and appear within the snake 8 times. For example, the snake below will satisfy this condition:<br>
+	<code class="java"><samp>[5,5],[5,2],[2,1],[1,5],[5,4],[4,0],[0,5],[5,3],[3,6],[6,5]</samp></code><br>
+	These two snakes, however, will not:<br>
+	<code class="java">[5,5],[5,2],[2,1],[1,5],[5,4],[4,0],[0,5]</code><br>
+	<code class="java">[6,5],[5,5],[5,2],[2,1],[1,5],[5,4],[4,0],[0,5],[5,3],[3,1]</code><br>
+	If this condition is satisfied, it is no longer possible to go on with this snake. Even after emptying the stock, no player will have the necessary piece. Essentially, the game has come to a permanent stop, so we have a draw.</p>
+	</li>
+</ol>
+
+<p>When the game ends, your program should print the result.</p>
+
+<p>Throughout the gameplay, the snake will grow in length. If it gets too large, the interface might get ugly. To avoid this problem, draw only the first and the last three pieces of the snake, separate them by three dots, <code class="java">...</code>, for example, <code class="java">[3, 5][2, 2][6, 6]...[3, 6][0, 3][3, 4]</code>.</p>
+
+<h5 id="objectives">Objectives</h5>
+
+<p>Modify your Stage 2 code:</p>
+
+<ol>
+	<li>
+	<p>At the end of the game, print one of the following phrases:<br>
+	<code class="java">Status: The game is over. You won!</code><br>
+	<code class="java">Status: The game is over. The computer won!</code><br>
+	<code class="java">Status: The game is over. It's a draw!</code></p>
+	</li>
+	<li>
+	<p>Print only the first and the last three pieces of the domino snake separated by three dots if it exceeds six dominoes in length.</p>
+	</li>
+	<li>
+	<p>Add a game loop that will repeat the following steps until the game ends:</p>
+	</li>
+</ol>
+
+<ul>
+	<li>
+	<p>Display the current playing field (stage 2).</p>
+	</li>
+	<li>
+	<p>If it's a user's turn, prompt the user for a move and apply it. If the input is invalid (a not-integer or it exceeds limitations), request a new input with the following message: <code class="java">Invalid input. Please try again.</code>.</p>
+	</li>
+	<li>
+	<p>If it's a computer's turn, prompt the user to press Enter, randomly generate a move, and apply it.</p>
+	</li>
+	<li>
+	<p>Switch turns.</p>
+	</li>
+</ul>
+
+<p>Keep in mind that at this stage we have no rules! Both the player and the computer can place their dominoes however they like.</p>
+
+<h5 id="examples">Examples</h5>
+
+<p>The greater-than symbol followed by a space (<code class="java">&gt; </code>) represents the user input. Note that it's not part of the input.</p>
+
+<p><strong>Example 1</strong></p>
+
+<p><em>Typical gameplay.</em></p>
+
+<pre><code class="language-no-highlight">======================================================================
+Stock size: 14
+Computer pieces: 6
+
+[6, 6]
+
+Your pieces:
+1:[0, 6]
+2:[5, 5]
+3:[4, 4]
+4:[4, 6]
+5:[0, 1]
+6:[0, 5]
+7:[1, 6]
+
+Status: It's your turn to make a move. Enter your command.
+&gt; 4
+======================================================================
+Stock size: 14
+Computer pieces: 6
+
+[6, 6][4, 6]
+
+Your pieces:
+1:[0, 6]
+2:[5, 5]
+3:[4, 4]
+4:[0, 1]
+5:[0, 5]
+6:[1, 6]
+
+Status: Computer is about to make a move. Press Enter to continue...
+&gt;
+======================================================================
+Stock size: 14
+Computer pieces: 5
+
+[6, 6][4, 6][1, 3]
+
+Your pieces:
+1:[0, 6]
+2:[5, 5]
+3:[4, 4]
+4:[0, 1]
+5:[0, 5]
+6:[1, 6]
+
+Status: It's your turn to make a move. Enter your command.
+&gt; -6
+======================================================================
+Stock size: 14
+Computer pieces: 5
+
+[1, 6][6, 6][4, 6][1, 3]
+
+Your pieces:
+1:[0, 6]
+2:[5, 5]
+3:[4, 4]
+4:[0, 1]
+5:[0, 5]
+
+Status: Computer is about to make a move. Press Enter to continue...
+&gt;
+======================================================================
+Stock size: 13
+Computer pieces: 6
+
+[1, 6][6, 6][4, 6][1, 3]
+
+Your pieces:
+1:[0, 6]
+2:[5, 5]
+3:[4, 4]
+4:[0, 1]
+5:[0, 5]
+
+Status: It's your turn to make a move. Enter your command.
+&gt; 0
+======================================================================
+Stock size: 12
+Computer pieces: 6
+
+[1, 6][6, 6][4, 6][1, 3]
+
+Your pieces:
+1:[0, 6]
+2:[5, 5]
+3:[4, 4]
+4:[0, 1]
+5:[0, 5]
+6:[2, 3]
+
+Status: Computer is about to make a move. Press Enter to continue...
+&gt;</code></pre>
+
+<p> </p>
+
+<p><strong>Example 2</strong></p>
+
+<p><em>Invalid input.</em></p>
+
+<pre><code class="language-no-highlight">======================================================================
+Stock size: 14
+Computer pieces: 5
+
+[4, 4][2, 3][3, 4]
+
+Your pieces:
+1:[1, 2]
+2:[2, 6]
+3:[0, 4]
+4:[5, 6]
+5:[2, 5]
+6:[2, 4]
+
+Status: It's your turn to make a move. Enter your command.
+&gt; Hello
+Invalid input. Please try again.
+&gt;</code></pre>
+
+<p><strong>Example 3</strong></p>
+
+<p><em>Mid-game example. The "domino snake" exceeds six dominoes in length.</em></p>
+
+<pre><code class="language-no-highlight">======================================================================
+Stock size: 7
+Computer pieces: 4
+
+[6, 6][6, 3][3, 0]...[4, 2][2, 3][3, 6]
+
+Your pieces:
+1:[0, 0]
+2:[1, 2]
+3:[5, 5]
+
+Status: It's your turn to make a move. Enter your command.</code></pre>
+
+<p><strong>Example 4</strong></p>
+
+<p><em>The player wins.</em></p>
+
+<pre><code class="language-no-highlight">======================================================================
+Stock size: 13
+Computer pieces: 2
+
+[3, 5][2, 2][6, 6]...[3, 6][0, 3][3, 4]
+
+Your pieces:
+1:[4, 4]
+
+Status: It's your turn to make a move. Enter your command.
+&gt; 1
+======================================================================
+Stock size: 13
+Computer pieces: 2
+
+[3, 5][2, 2][6, 6]...[0, 3][3, 4][4, 4]
+
+Your pieces:
+
+Status: The game is over. You won!</code></pre>

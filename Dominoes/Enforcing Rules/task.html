@@ -1,0 +1,100 @@
+<h5 id="description">Description</h5>
+
+<p>You can't have a game without rules. It's time to introduce them!</p>
+
+<p>Until now, the players were able to place their dominoes however they like. Now, it is considered a violation. According to the rules, the numbers on the ends of the two neighboring dominoes must match each other. This rule can also be described as a set of two requirements:</p>
+
+<ol>
+	<li>A player cannot add a domino to the end of the snake if it doesn't contain the matching number.</li>
+	<li>The orientation of the newly added domino ensures that the matching numbers are neighbors.</li>
+</ol>
+
+<p>For example, consider the following situation:</p>
+
+<p>We have a <code class="java">[3,4],[4,4],[4,2]</code> snake and a <code class="java">[1,2]</code> domino. The domino cannot be added to the left side of the snake because there is no 3 in <code class="java">[1,2]</code>. However, the domino can be added to the right side of the snake because <code class="java">[1,2]</code> contains a 2. If we were to place the domino on the right side of the snake, we would have to reorient it: <code class="java">[3,4],[4,4],[4,2],<strong>[2,1]</strong></code>.<br>
+<br>
+These two requirements are strict for both the player and the computer.</p>
+
+<h5 id="objectives">Objectives</h5>
+
+<p>Add the following functionality to your code. When it's a player's turn, the program should:</p>
+
+<ol>
+	<li>Verify that the move entered by the player is legal (requirement #1).<br>
+	If not, request a new input with the following message: <code class="java">Illegal move. Please try again.</code>.</li>
+	<li>Place dominoes with the correct orientation (requirement #2).</li>
+</ol>
+
+<p>When it's a computer's turn, the program should:</p>
+
+<ol>
+	<li>Try random moves until it finds a legal one.<br>
+	<div class="alert alert-primary">A set of possible moves ranges from <code class="java">-computer_size</code> to <code class="java">computer_size</code> (where the <code class="java">computer_size</code> is the number of dominoes the computer still has). Skipping a turn (move 0) is always legal.</div></li>
+	<li>Place dominoes with the correct orientation.</li>
+</ol>
+
+<h5 id="examples">Examples</h5>
+
+<p>The greater-than symbol followed by a space (<code class="java">&gt; </code>) represents the user input. Note that it's not part of the input.</p>
+
+<p><strong>Example 1</strong></p>
+
+<p><em>Invalid move</em></p>
+
+<pre><code class="language-no-highlight">======================================================================
+Stock size: 14
+Computer pieces: 6
+
+[6, 6]
+
+Your pieces:
+1:[0, 5]
+2:[1, 5]
+3:[2, 4]
+4:[2, 6]
+5:[0, 1]
+6:[1, 6]
+7:[5, 6]
+
+Status: It's your turn to make a move. Enter your command.
+&gt; 5
+Illegal move. Please try again.
+&gt;</code></pre>
+
+<p><strong>Example 2</strong></p>
+
+<p><em>Valid move (with corrected domino orientation)</em></p>
+
+<pre><code class="language-no-highlight">======================================================================
+Stock size: 14
+Computer pieces: 6
+
+[6, 6]
+
+Your pieces:
+1:[0, 6]
+2:[5, 5]
+3:[4, 4]
+4:[4, 6]
+5:[0, 1]
+6:[0, 5]
+7:[1, 6]
+
+Status: It's your turn to make a move. Enter your command.
+&gt; 7
+======================================================================
+Stock size: 14
+Computer pieces: 6
+
+[6, 6][6, 1]
+
+Your pieces:
+1:[0, 6]
+2:[5, 5]
+3:[4, 4]
+4:[4, 6]
+5:[0, 1]
+6:[0, 5]
+
+Status: Computer is about to make a move. Press Enter to continue...
+&gt;</code></pre>

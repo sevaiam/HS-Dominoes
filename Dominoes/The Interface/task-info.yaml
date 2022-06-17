@@ -1,0 +1,95 @@
+type: edu
+files:
+- name: dominoes/dominoes.py
+  visible: true
+  text: |
+    # Write your code here
+  learner_created: false
+- name: tests.py
+  visible: false
+  text: "from typing import List, Any\nfrom hstest import StageTest, CheckResult,\
+    \ WrongAnswer, TestCase\nimport ast\n\n\nclass TestStage2(StageTest):\n\n    def\
+    \ generate(self) -> List[TestCase]:\n        return [\n            TestCase(),\n\
+    \            TestCase(),\n            TestCase()\n        ]\n\n    def get_the_stock(self,\
+    \ reply):\n        \"\"\"Get the player's stock\"\"\"\n        if reply.find(\"\
+    0:\") == -1:\n            try:\n                ind = reply.find(\"1:\")\n   \
+    \             ind2 = reply.lower().find(\"status\")\n                list_stack\
+    \ = reply[ind:ind2].strip().split('\\n')\n                stock = [i.split(':')[1].strip()\
+    \ for i in list_stack]\n                try:\n                    stock = [ast.literal_eval(i)\
+    \ for i in stock]\n                except (ValueError, SyntaxError):\n       \
+    \             raise WrongAnswer(\"An error occurred while processing your output.\\\
+    n\"\n                                      \"Please make sure that your program's\
+    \ output is formatted exactly as described.\")\n                return stock\n\
+    \            except Exception:\n                raise WrongAnswer(\"Please, output\
+    \ all pieces in the format: \\\"N:[N1, N2]\\\"\\n\"\t\n                      \
+    \            \"Don't forget the colon character as a separator.\")\n        raise\
+    \ WrongAnswer(\"When you print the player's pieces, the numbering should start\
+    \ from 1, not 0.\")\n\n    def check_the_stock(self, reply):\n        \"\"\"Check\
+    \ that the pieces in the player stock are unique\"\"\"\n\n        uniq = self.get_the_stock(reply)\n\
+    \        len1 = len(uniq)\n        try:\n            uniq = set([tuple(i) for\
+    \ i in uniq])\n        except TypeError:\n            raise WrongAnswer(\"An error\
+    \ occurred while tests were processing your output.\\n\"\n                   \
+    \           \"Make sure you output pieces in the required format.\")\n       \
+    \ len2 = len(uniq)\n        if len1 != len2:\n            return False\n     \
+    \   return True\n\n    def check_the_snake(self, reply, ds):\n        \"\"\"Check\
+    \ that the domino snake is really the maximum\"\"\"\n\n        stock = self.get_the_stock(reply)\n\
+    \        stock = [i for i in stock if i[0] == i[1]]\n        if len(stock) > 0:\n\
+    \            if ds and type(ds[0]) != int:\n                raise WrongAnswer(\"\
+    The domino snake is supposed to be a list containing two integers.\\n\"\n    \
+    \                              \"Please, make sure you output the domino snake\
+    \ in the required format.\")\n            if ds < sorted(stock, reverse=True)[0]:\n\
+    \                return False\n        return True\n\n    def check_the_length(self,\
+    \ reply, cs):\n        stock = self.get_the_stock(reply)\n        opt = len(stock)\
+    \ == 7 and cs == 6\n        opt2 = len(stock) == 6 and cs == 7\n        if not\
+    \ (opt or opt2):\n            return False\n        return True\n\n    def check_the_status(self,\
+    \ reply, cs):\n        \"\"\"Check if the status is right\"\"\"\n\n        opt\
+    \ = cs == 7 and \"computer is\" in reply.lower()\n        opt2 = cs == 6 and \"\
+    your turn\" in reply\n        if not (opt or opt2):\n            return False\n\
+    \        return True\n\n    def check(self, reply: list, attach: Any) -> CheckResult:\n\
+    \        if not self.check_the_stock(reply):\n            return CheckResult.wrong(\"\
+    Your pieces are not unique\")\n        replyk = [i for i in reply.split('\\n')\
+    \ if i]\n        if \"=\" in replyk[0].strip() and replyk[0].strip() != \"=\"\
+    \ * 70:\n            return CheckResult.wrong(\"The design is not right. \"\n\
+    \                                     \"You need to print the header using 70\
+    \ equal sign characters (=), \"\n                                     f\"but {len(replyk[0].strip())}\
+    \ characters were found.\")\n        elif \"=\" not in reply[0].strip():\n   \
+    \         return CheckResult.wrong(\"The design is not right. \"\n           \
+    \                          \"You need to print the header using 70 equal sign\
+    \ characters (=).\")\n        try:\n            stock_size = int(replyk[1].split()[-1])\n\
+    \        except ValueError:\n            raise WrongAnswer(\"The stock size doesn't\
+    \ seem to be printed in the correct format. \\n\"\n                          \
+    \    \"Please, output it in the format: \\\"Stock size: N\\\",\\n\"\n        \
+    \                      \"where N is a number.\")\n        if stock_size != 14:\n\
+    \            return CheckResult.wrong(\"The stock is not right\")\n        try:\n\
+    \            domino_snake = ast.literal_eval(replyk[3])\n        except (IndentationError,\
+    \ SyntaxError, ValueError):\n            raise WrongAnswer(\"Domino pieces don't\
+    \ seem to be printed in the correct format.\")\n\n        if not self.check_the_snake(reply,\
+    \ domino_snake):\n            return CheckResult.wrong(\"The domino snake should\
+    \ be the maximum\")\n        try:\n            cs = int(replyk[2].split()[-1])\n\
+    \        except ValueError:\n            raise WrongAnswer(\"Computer pieces don't\
+    \ seem to be printed in the correct format. \\n\"\n                          \
+    \    \"Please, output them in the format: \\\"Computer pieces: N\\\",\\n\"\n \
+    \                             \"where N is a number.\")\n        if not 6 <= cs\
+    \ <= 7:\n            return CheckResult.wrong(\"The computer pieces are not right\"\
+    )\n        if not self.check_the_length(reply, cs):\n            return CheckResult.wrong(\"\
+    Something is not right about the pieces played\")\n        if not self.check_the_status(reply,\
+    \ cs):\n            return CheckResult.wrong(\"The status of the game is wrong.\
+    \ \"\n                                     \"Please, make sure that the status\
+    \ is the player, who is to make the next move.\")\n        return CheckResult.correct()\n\
+    \n\nif __name__ == '__main__':\n    TestStage2('dominoes.dominoes').run_tests()\n"
+  learner_created: false
+feedback_link: https://hyperskill.org/projects/146/stages/787/implement#comment
+status: Failed
+feedback:
+  message: "Error in test #1\n\nProgram ran out of input. You tried to read more than\
+    \ expected.\n\nPlease find below the output of your program during this failed\
+    \ test.\nNote that the '>' character indicates the beginning of the input line.\n\
+    \n---\n\n======================================================================\n\
+    Stock size:  14\nComputer pieces:  7\n\n[6, 6]\nYour pieces:\n1:[4, 6]\n2:[0,\
+    \ 4]\n3:[2, 5]\n4:[2, 3]\n5:[1, 2]\n6:[1, 4]\n\nStatus: Computer is about to make\
+    \ a move. Press Enter to continue...\n> \n======================================================================\n\
+    Stock size:  14\nComputer pieces:  6\n\n[5, 5][6, 6]\nYour pieces:\n1:[4, 6]\n\
+    2:[0, 4]\n3:[2, 5]\n4:[2, 3]\n5:[1, 2]\n6:[1, 4]\n\nStatus: It's your turn to\
+    \ make a move. Enter your command."
+  time: Fri, 17 Jun 2022 12:49:19 UTC
+record: 2

@@ -1,0 +1,14 @@
+type: hyperskill
+title: Dominoes
+language: English
+summary: "Have you ever wanted to code a game where the computer is your enemy? Well,\
+  \ this little project allows you to do just that.\r\nTake turns playing classic\
+  \ dominoes against your computer in a race to victory.\r\nLearn, how artificial\
+  \ intelligence can make use of simple statistics to make educated decisions. This\
+  \ project is all about basic concepts, put them to practice by making a fun little\
+  \ game.<br/><br/>Learn more at <a href=\"https://hyperskill.org/projects/146?utm_source=ide&utm_medium=ide&utm_campaign=ide&utm_content=project-card\"\
+  >https://hyperskill.org/projects/146</a>"
+programming_language: Python
+content:
+- Dominoes
+mode: Study
